@@ -3,7 +3,7 @@
 
 library("stringr")
 library("dplyr")
-setwd("/Users/krishnaprempasumarthy/Downloads/UCI HAR Dataset/")
+setwd("UCI HAR Dataset/")
 
 # This function merges two text files into another text file
 merge_txt_files <- function(f1,f2){
@@ -35,7 +35,7 @@ if (dir.exists("merged")){
     setwd("Inertial Signals merged/")
     merge_dirs("../../test/Inertial Signals","../../train/Inertial Signals")
 
-setwd("/Users/krishnaprempasumarthy/Downloads/UCI HAR Dataset/")
+setwd("../../")
 
 # Read the features and merged sets into dataframes
 features <- read.table("features.txt")
