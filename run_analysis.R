@@ -49,57 +49,34 @@ std_locations <- grep("std()",features[,2])
 extract_merged <- merged[,c(mean_locations,std_locations)]
 names(extract_merged) <- features[c(mean_locations,std_locations),2]
 
-# Create a column of activity labels for test and training sets  and make replacements
-act_labels_test <- read.table("test/y_test.txt")
-for(i in 1:nrow(act_labels_test)){
-  if(act_labels_test[i,1] == 1){
-    act_labels_test[i,1] = "WALKING"
+# Create a column of activity labels for merged set  and make replacements
+act_labels_merged <- read.table("merged/y_merged.txt")
+for(i in 1:nrow(act_labels_merged)){
+  if(act_labels_merged[i,1] == 1){
+    act_labels_merged[i,1] = "WALKING"
   }
-  if(act_labels_test[i,1] == 2){
-    act_labels_test[i,1] = "WALKING_UPSTAIRS"
+  if(act_labels_merged[i,1] == 2){
+    act_labels_merged[i,1] = "WALKING_UPSTAIRS"
   }
-  if(act_labels_test[i,1] == 3){
-    act_labels_test[i,1] = "WALKING_DOWNSTAIRS"
+  if(act_labels_merged[i,1] == 3){
+    act_labels_merged[i,1] = "WALKING_DOWNSTAIRS"
   }
-  if(act_labels_test[i,1] == 4){
-    act_labels_test[i,1] = "SITTING"
+  if(act_labels_merged[i,1] == 4){
+    act_labels_merged[i,1] = "SITTING"
   }
-  if(act_labels_test[i,1] == 5){
-    act_labels_test[i,1] = "STANDING"
+  if(act_labels_merged[i,1] == 5){
+    act_labels_merged[i,1] = "STANDING"
   }
-  if(act_labels_test[i,1] == 6){
-    act_labels_test[i,1] = "LAYING"
-  }
-}
-
-act_labels_train <- read.table("train/y_train.txt")
-for(i in 1:nrow(act_labels_train)){
-  if(act_labels_train[i,1] == 1){
-    act_labels_train[i,1] = "WALKING"
-  }
-  if(act_labels_train[i,1] == 2){
-    act_labels_train[i,1] = "WALKING_UPSTAIRS"
-  }
-  if(act_labels_train[i,1] == 3){
-    act_labels_train[i,1] = "WALKING_DOWNSTAIRS"
-  }
-  if(act_labels_train[i,1] == 4){
-    act_labels_train[i,1] = "SITTING"
-  }
-  if(act_labels_train[i,1] == 5){
-    act_labels_train[i,1] = "STANDING"
-  }
-  if(act_labels_train[i,1] == 6){
-    act_labels_train[i,1] = "LAYING"
+  if(act_labels_merged[i,1] == 6){
+    act_labels_merged[i,1] = "LAYING"
   }
 }
 
 # Now add these to extract_merged
-extract_merged <- cbind(rbind(act_labels_test,act_labels_train),extract_merged)
+extract_merged <- cbind(act_labels_merged,extract_merged)
 colnames(extract_merged)[1] <- "Activity Label"
 colnames(extract_merged)[2:80] <- as.character(features[c(mean_locations,std_locations),2])
 setwd("merged/")
-write.table(extract_merged,"extract_merged.txt") # create a text file containg only means and stds from the merged dataset
 
 # Finally, create a new independent dataset with the average of each variable for each activity and each subject
 subjects <- 1:30
